@@ -27,7 +27,7 @@
     this.attempts = 0;
     this.pairs = 0;
     this.victory = false;
-    this.range = [1,2,3,4,5];
+    this.range = [1,2,3,4,5,6,7,8,9,10];
     this.multiplier = 1;
 
     // Next write a selectCard function on gc that accepts a card object on click and

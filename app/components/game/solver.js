@@ -12,6 +12,13 @@ angular.module('dwarfMatch')
                 this.checkCard(0);
             }
 
+            this.runPerfect = function runPerfect(){
+                this.parent.deck.forEach((item, index) =>{
+                    this.seenDeck.push({index: index, card: item})
+                })
+                this.checkCard(0);
+            }
+
 
 
             // this.checkCard = function checkCard(index){
@@ -43,13 +50,21 @@ angular.module('dwarfMatch')
             // }
 
             this.checkCard = function checkCard(index) {
-                if (this.parent.victory) { return; }
+                if(this.parent.deck[index].show){
+                    $timeout(() => { this.checkCard(index + 1) }, 1);
+                    return;
+                }
+                if (this.parent.victory) { 
+                    this.seenDeck = [];
+                    return;
+                }
                 var newCard = { index: index, card: this.parent.selectCard(this.parent.deck[index]) };
                 this.seenDeck.push(newCard);
                 var matchIndex = this.findMatch(newCard);
                 if (matchIndex > -1) {
                     $timeout(() => { this.parent.selectCard(this.parent.deck[matchIndex]) }, 200);
-                    $timeout(() => { this.checkCard(index + 1) }, 1700);
+                    //$timeout(() => { this.checkCard(index + 1) }, 1700);
+                    $timeout(() => { this.checkCard(index + 1) }, 600);
                     return;
                 }
 
@@ -58,10 +73,11 @@ angular.module('dwarfMatch')
                     newCard = { index: index, card: this.parent.selectCard(this.parent.deck[index]) };
                     this.seenDeck.push(newCard);
                     matchIndex = this.findMatch(newCard);
-                    if (matchIndex > -1) {
+                    if (matchIndex > -1 && matchIndex != (index - 1)) {
                         $timeout(() => { this.parent.selectCard(this.parent.deck[index]) }, 1500);
                         $timeout(() => { this.parent.selectCard(this.parent.deck[matchIndex]) }, 1700);
-                        $timeout(() => { this.checkCard(index + 1) }, 3200);
+                        $timeout(() => { this.checkCard(index + 1) }, 2100);
+                        //$timeout(() => { this.checkCard(index + 1) }, 3200);
                         return;
                     }
 
@@ -84,5 +100,6 @@ angular.module('dwarfMatch')
         },
         template: `
             <button ng-click="$ctrl.run()">run solver</button>
+            <button ng-click="$ctrl.runPerfect()">run Perfect Solver</button>
         `
     })
