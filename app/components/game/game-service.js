@@ -2,6 +2,7 @@
   angular.module('dwarfMatch')
     .service('GameService', function () {
       var imgRoot = 'assets/img/cards/'
+      var colors = ['white', 'red', 'green', 'blue', 'purple']
 
       function Deck () {
         this.cards = [{
@@ -43,10 +44,23 @@
         }]
       }
 
-      this.getDeck = function () {
-        var pairs = shuffle(new Deck().cards).concat(shuffle(new Deck().cards))
-        var shuffled = shuffle(shuffle(pairs))
-        return shuffled
+      this.getDeck = function (decksMultiplier) {
+        var x = 0;
+        var multiplier = decksMultiplier;
+        var deck = [];
+        while(x < multiplier){
+          var pairs = shuffle(new Deck().cards).concat(shuffle(new Deck().cards))
+          var shuffled = shuffle(shuffle(pairs))
+          shuffled.forEach(item =>{
+            item.color = colors[x];
+          })
+          deck = deck.concat(shuffled)
+          x++;
+        }
+        deck = shuffle(deck);
+        deck = shuffle(deck);
+        deck = shuffle(deck);
+        return deck;
       }
 
       function shuffle (deck) {
