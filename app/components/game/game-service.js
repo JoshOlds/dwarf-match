@@ -2,7 +2,7 @@
   angular.module('dwarfMatch')
     .service('GameService', function () {
       var imgRoot = 'assets/img/cards/'
-      var colors = ['white', 'red', 'green', 'blue', 'purple']
+      var colors = ['peru', 'red', 'lime', 'blue', 'Fuchsia']
 
       function Deck () {
         this.cards = [{

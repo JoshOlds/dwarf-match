@@ -15,7 +15,7 @@
                             <img src="assets/img/cards/dwarf-face.png" style="background-color: white;" height="120" alt="Logo">
                             <h3>Dwarf Match</h3>
                         </div>
-                        <div class="face back" style="background-color: {{card.color}}">
+                        <div class="face back" ng-if="card.show" style="outline: 10px solid {{card.color}}">
                             <h3>{{card.title}}</h3>
                             <img ng-src="{{card.url}}"  height="80" alt="{{card.title}}">
                         </div>
@@ -28,4 +28,7 @@
 
             </div>
         </div>
+
+        <solver></solver>
+
     </div>

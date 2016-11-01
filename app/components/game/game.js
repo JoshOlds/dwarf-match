@@ -35,22 +35,21 @@
     // After you complete this refer back to readme.md
 
     this.selectCard = function selectCard(card){
-      if(lock || card.active){return;}
+      if(lock || card.show){return;}
       if(!card1.title){
         card1 = card;
-        card1.active = true;
         card1.show = true;
-        return;
+        return card;
       }
       if(!card2.title){
         card2 = card;
-        card2.active = true;
         card2.show = true;
         if(this.isMatch(card1, card2)){this.resetCards(0);}
         else{this.resetCards(1000);}
-        return;
+        return card;
       }
       this.resetCards(1000);
+      return card;
     }
 
     // Write a local resetCards function that will empty our card variables
@@ -61,11 +60,9 @@
       $timeout(function(){
         if(!card1.found){
           card1.show = false;
-          card1.active = false;
         }
         if(!card1.found){
           card2.show = false;
-          card2.active = false;
         }
         card1 = {};
         card2 = {};
@@ -113,5 +110,7 @@
       card2 = {};
       lock = false;
     }
+
+
   }
 }())
